@@ -1,0 +1,298 @@
+{
+    "type": "newContentPackage",
+    "applicationKey": "",
+    "xDpi": 96,
+    "yDpi": 96,
+    "viewSizeHeight": 643,
+    "viewSizeWidth": 302
+}
+r{
+    "type": "ack",
+    "hmacChallenge": "",
+    "iinkSessionId": "70977470-a526-47c8-97f1-55ad24b1b0f1"
+}
+{
+    "type": "hmac",
+    "hmac": ""
+}
+r{
+    "type": "contentPackageDescription",
+    "contentPartCount": 0
+}
+{
+    "type": "configuration",
+    "lang": "en_US",
+    "export": {
+        "image-resolution": 300,
+        "jiix": {
+            "bounding-box": false,
+            "strokes": false
+        }
+    },
+    "renderer": {
+        "debug": {
+            "draw-text-boxes": false,
+            "draw-image-boxes": false
+        }
+    },
+    "math": {
+        "mimeTypes": [
+            "application/x-latex",
+            "application/mathml+xml"
+        ],
+        "fonts": [
+            "STIXGeneral:n4,i4,n7,i7",
+            "STIXSizeThreeSym:n4,n7"
+        ],
+        "solver": {
+            "enable": true,
+            "fractional-part-digits": 3,
+            "decimal-separator": ".",
+            "rounding-mode": "half up",
+            "angle-unit": "deg"
+        }
+    },
+    "text": {
+        "mimeTypes": [
+            "text/plain"
+        ],
+        "fonts": [
+            "Open Sans"
+        ],
+        "margin": {
+            "top": 10,
+            "left": 15,
+            "right": 15
+        }
+    },
+    "diagram": {
+        "mimeTypes": []
+    },
+    "nebo": {
+        "mimeTypes": []
+    }
+}
+{
+    "type": "newContentPart",
+    "contentType": "TEXT",
+    "mimeTypes": [
+        "text/plain"
+    ]
+}
+r{
+    "type": "svgPatch",
+    "updates": [
+        {
+            "type": "REPLACE_ALL",
+            "svg": "<svg x=\"0px\" y=\"0px\" width=\"1065px\" height=\"676px\" viewBox=\"0 0 1065 676 \">\n  <g id=\"viewTransform\" transform=\"matrix(3.77953, 0, 0, 3.77953, -0, -0)\"></g>\n</svg>\n"
+        }
+    ]
+}
+r{
+    "type": "partChanged",
+    "partIdx": 0,
+    "partId": "sruuzoma",
+    "partCount": 1
+}
+{
+    "type": "setTheme",
+    "theme": "ink {\ncolor: #1580CD;\n-myscript-pen-width: 1;\n-myscript-pen-fill-style: none;\n-myscript-pen-fill-color: #FFFFFF00;\n}\n.math {\nfont-family: STIXGeneral;\n}\n.math-solved {\nfont-family: STIXGeneral;\ncolor: #A8A8A8FF;\n}\n.text {\nfont-family: Open Sans;\nfont-size: 10;\n}\n"
+}
+{
+    "type": "setPenStyle",
+    "style": "\n"
+}
+r{
+    "type": "newPart",
+    "idx": 0,
+    "id": "sruuzoma"
+}
+{
+    "type": "ping"
+}
+r{
+    "type": "pong",
+    "message": "pong"
+}
+{
+    "type": "addStrokes",
+    "strokes": [
+        {
+            "id": "pendingStroke-0",
+            "pointerType": "pen",
+            "pointerId": -1,
+            "x": [
+                391,
+                386,
+                380,
+                372,
+                370,
+                367,
+                365,
+                365,
+                366,
+                371,
+                376,
+                382,
+                389,
+                397,
+                404,
+                410,
+                418,
+                426,
+                435,
+                446,
+                450,
+                453,
+                454,
+                454,
+                451,
+                446,
+                442,
+                439,
+                431,
+                427,
+                421,
+                417,
+                408,
+                404,
+                400,
+                397,
+                392
+            ],
+            "y": [
+                153,
+                149,
+                149,
+                150,
+                153,
+                156,
+                160,
+                165,
+                169,
+                175,
+                179,
+                183,
+                188,
+                192,
+                194,
+                195,
+                198,
+                198,
+                198,
+                196,
+                195,
+                192,
+                187,
+                184,
+                176,
+                169,
+                166,
+                164,
+                161,
+                159,
+                156,
+                154,
+                150,
+                148,
+                147,
+                146,
+                145
+            ],
+            "t": [
+                262580,
+                262631,
+                262676,
+                262709,
+                262725,
+                262742,
+                262759,
+                262775,
+                262792,
+                262825,
+                262844,
+                262861,
+                262878,
+                262894,
+                262909,
+                262925,
+                262942,
+                262959,
+                262975,
+                262994,
+                263009,
+                263025,
+                263059,
+                263092,
+                263142,
+                263177,
+                263194,
+                263210,
+                263244,
+                263259,
+                263292,
+                263309,
+                263342,
+                263375,
+                263393,
+                263425,
+                263460
+            ],
+            "p": [
+                0.5,
+                0.7469560465564757,
+                0.7665225987135362,
+                0.800160363181834,
+                0.7007103955941203,
+                0.7222966378316396,
+                0.7292125754002905,
+                0.7436746598382117,
+                0.7185264889882718,
+                0.7968145931762148,
+                0.774350629289587,
+                0.7880849230110567,
+                0.8067411006940866,
+                0.8105224395454083,
+                0.7891492414771674,
+                0.7681880209236327,
+                0.8060672826037246,
+                0.7993507587287858,
+                0.8111120608599278,
+                0.665629847511789,
+                0.7185264889882718,
+                0.7222966378316396,
+                0.7461846839143089,
+                0.6761535882018319,
+                0.8060672826037246,
+                0.8067411006940866,
+                0.7436746598382117,
+                0.7007103955941203,
+                0.8060672826037246,
+                0.7292125754002905,
+                0.7798249238338513,
+                0.7292125754002905,
+                0.819237981561732,
+                0.7292125754002905,
+                0.7185264889882718,
+                0.6831899108492184,
+                0.7461846839143089
+            ]
+        }
+    ]
+}
+r{
+    "type": "contentChanged",
+    "partId": "sruuzoma",
+    "canUndo": true,
+    "canRedo": false
+}
+r{
+    "type": "exported",
+    "partId": "sruuzoma",
+    "exports": {
+        "text/plain": "0"
+    }
+}
+{
+    "type": "convert"
+}
