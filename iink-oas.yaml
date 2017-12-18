@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: iink
+  description: Trying to use openapi 3.0.0 in order to specify websocket message exchange of digital ink.
+  version: 1.0.0
+components:
+  schemas:
+    newContentPackage:
+      description: The first message you send to the myscript server to start an iink session
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - "newContentPackage"
+        applicationKey:
+          type: string
+          description: The application key you were given during registration
+        xDpi: 
+          type: integer
+          format: int32
+          description: x dot density of your writing zone
+        xDpi: 
+          type: integer
+          format: int32
+          description: y dot density of your writing zone
+        viewSizeHeight:
+          type: integer
+          format: int32
+          description: height in pixel of your writing zone
+        viewSizeWidth:
+          type: integer
+          format: int32
+          description: width in pixel of your writing zone
+    ack:
+      description: The acknowledgment from the server of your first message 
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - "ack"
+        iinkSessionId:
+          type: string
+          description: The session id used to reconnect to the doc in case of connection failure
+        hmacChallenge:
+          type: string
+          description: The hmac challenge
+
+    hmac:
+      description: Your response to the hmac challenge
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - "hmac"
+        hmac:
+          type: string
+          description: The computed hmac
+    contentPackageDescription:
+      description: The response to your successfull sing-in
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - "contentPackageDescription"
+        contentPartCount:
+          type: integer
+          format: int32
+          description: the content part count
+
+# https://developer.myscript.com/docs/interactive-ink/1.0/web/websockets/messages/
+# https://doc.myscript.com/MyScriptCloud/3.2.0/reference/index.html#api-Text_Websocket_Recognition-Continue
+# https://developer.myscript.com/old-docs/cdk/3.2/myscript-cloud/reco-types.html
+# https://developer.myscript.com/old-docs/cdk/3.2/myscript-cloud/protocols.html#websocket-protocol
