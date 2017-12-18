@@ -1,77 +1,388 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info:
   title: iink
-  description: Trying to use openapi 3.0.0 in order to specify websocket message exchange of digital ink.
+  description: >-
+    Trying to use openapi 3.0.0 in order to specify websocket message exchange
+    of digital ink.
   version: 1.0.0
 components:
   schemas:
+    message:
+      description: The "supperclass" for the exchanged messages
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+      required:
+        - type
     newContentPackage:
-      description: The first message you send to the myscript server to start an iink session
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - "newContentPackage"
-        applicationKey:
-          type: string
-          description: The application key you were given during registration
-        xDpi: 
-          type: integer
-          format: int32
-          description: x dot density of your writing zone
-        xDpi: 
-          type: integer
-          format: int32
-          description: y dot density of your writing zone
-        viewSizeHeight:
-          type: integer
-          format: int32
-          description: height in pixel of your writing zone
-        viewSizeWidth:
-          type: integer
-          format: int32
-          description: width in pixel of your writing zone
+      description: >-
+        The first message you send to the myscript server to start an iink
+        session
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            applicationKey:
+              type: string
+              description: The application key you were given during registration
+            xDpi:
+              type: integer
+              format: int32
+              description: x dot density of your writing zone
+            yDpi:
+              type: integer
+              format: int32
+              description: y dot density of your writing zone
+            viewSizeHeight:
+              type: integer
+              format: int32
+              description: height in pixel of your writing zone
+            viewSizeWidth:
+              type: integer
+              format: int32
+              description: width in pixel of your writing zone
     ack:
-      description: The acknowledgment from the server of your first message 
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - "ack"
-        iinkSessionId:
-          type: string
-          description: The session id used to reconnect to the doc in case of connection failure
-        hmacChallenge:
-          type: string
-          description: The hmac challenge
-
+      description: The acknowledgment from the server of your first message
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            iinkSessionId:
+              type: string
+              description: >-
+                The session id used to reconnect to the doc in case of
+                connection failure
+            hmacChallenge:
+              type: string
+              description: The hmac challenge
     hmac:
       description: Your response to the hmac challenge
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - "hmac"
-        hmac:
-          type: string
-          description: The computed hmac
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            hmac:
+              type: string
+              description: The computed hmac
     contentPackageDescription:
       description: The response to your successfull sing-in
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - "contentPackageDescription"
-        contentPartCount:
-          type: integer
-          format: int32
-          description: the content part count
-
-# https://developer.myscript.com/docs/interactive-ink/1.0/web/websockets/messages/
-# https://doc.myscript.com/MyScriptCloud/3.2.0/reference/index.html#api-Text_Websocket_Recognition-Continue
-# https://developer.myscript.com/old-docs/cdk/3.2/myscript-cloud/reco-types.html
-# https://developer.myscript.com/old-docs/cdk/3.2/myscript-cloud/protocols.html#websocket-protocol
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            contentPartCount:
+              type: integer
+              format: int32
+              description: the content part count
+    configuration:
+      description: 'This enable configuration, like recognition language, margins, ...'
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            lang:
+              type: string
+              description: the recognition language.
+            export:
+              type: object
+              description: Format of the export part of the writing zone
+              properties:
+                image-resolution:
+                  type: integer
+                  format: int32
+                jiix:
+                  type: object
+                  properties:
+                    bounding-box:
+                      type: boolean
+                    strokes:
+                      type: boolean
+            renderer:
+              type: object
+              properties:
+                debug:
+                  type: object
+                  properties:
+                    draw-text-boxes:
+                      type: boolean
+                    draw-image-boxes:
+                      type: boolean
+            math:
+              type: object
+              properties:
+                mimeTypes:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - application/x-latex
+                      - application/mathml+xml
+                fonts:
+                  type: array
+                  items:
+                    type: string
+                    description: format ?
+                solver:
+                  type: object
+                  properties:
+                    enable:
+                      type: boolean
+                    fractional-part-digits:
+                      type: integer
+                      format: int32
+                    decimal-separator:
+                      type: string
+                    rounding-mode:
+                      type: string
+                      enum:
+                        - '??'
+                    angle-unit:
+                      type: string
+                      enum:
+                        - deg
+                        - rad
+                text:
+                  type: object
+                  properties:
+                    mimeTypes:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - text/plain
+                    fonts:
+                      type: array
+                      items:
+                        type: string
+                        description: format ?
+                    margin:
+                      type: object
+                      properties:
+                        top:
+                          type: integer
+                          format: int32
+                        left:
+                          type: integer
+                          format: int32
+                        right:
+                          type: integer
+                          format: int32
+                diagram:
+                  type: object
+                  properties:
+                    mimeTypes:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - '???'
+                nebo:
+                  type: object
+                  properties:
+                    mimeTypes:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - '???'
+    newContentPart:
+      description: >-
+        Creates a new part.It can declare mimeTypes which will be attached to
+        the exported message. If mimeTypes are specified, the server will send
+        exported message after each contentChanged message.
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            contentType:
+              type: string
+              enum:
+                - TEXT
+                - MATH
+                - MUSIC
+                - NEBO
+                - '???'
+            mimeTypes:
+              type: array
+              items:
+                type: string
+    partChanged:
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            partIdx:
+              type: integer
+              format: int32
+              description: index of the part
+            partId:
+              type: string
+              description: id of the part
+            partCount:
+              type: integer
+              format: int32
+              description: total count of parts
+    setTheme:
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            theme:
+              type: string
+              description: CSS theme for the writing area
+    setPenStyle:
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            style:
+              type: string
+    newPart:
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            partIdx:
+              type: integer
+              format: int32
+              description: index of the part
+            partId:
+              type: string
+              description: id of the part
+    svgPatch:
+      description: >-
+        Indicates that there are changes to make to the svg part of the writing
+        area
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            updates:
+              type: array
+              description: the changes to make
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - APPEND_CHILD
+                      - REMOVE_ELEMENT
+                      - REPLACE_ALL
+                      - REPLACE_ELEMENT
+                      - REMOVE_CHILD
+                      - INSERT_BEFORE
+                      - REMOVE_ATTRIBUTE
+                      - SET_ATTRIBUTE
+                  svg:
+                    type: string
+                    description: The svg bloc that has to be treated
+                  parentId:
+                    type: string
+                    description: >-
+                      The id under which has to be REMOVEd or APPENDed the CHILD
+                      svg bloc
+                  id:
+                    type: string
+                    description: the id of the ELEMENT to REMOVE or REPLACE
+                  index:
+                    type: integer
+                    format: int32
+                    description: the index of the CHILD that has to be REMOVEd
+                  refId:
+                    type: integer
+                    format: int32
+                    description: The id BEFORE witch the svg bloc has to be INSERTed
+                  name:
+                    type: string
+                    description: The name of the ATTRIBUTE that has to be trated
+                  value:
+                    type: string
+                    description: A value for the ATTRIBUTE.
+    contentChanged:
+      description: A content has changed after the computing of strokes
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            partId:
+              type: string
+              description: indicates which part has changed
+            canUndo:
+              type: boolean
+              description: indicates if the change can be undone
+            canRedo:
+              type: boolean
+              description: indicates if the change can be redone
+    exported:
+      description: A content has been exported
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            partId:
+              type: string
+              description: indicates which part has been exported
+            exports:
+              type: object
+              description: >-
+                the exported content for each configured mimetype (the mime type
+                is the key of the object)
+              additionalProperties:
+                type: string
+    convert:
+      $ref: '#/components/schemas/message'
+    addStrokes:
+      description: sending strokes to the recognition engine
+      allOf:
+        - $ref: '#/components/schemas/message'
+        - type: object
+          properties:
+            strokes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: an identifier for the stroke
+                  pointerType:
+                    type: string
+                    enum:
+                      - mouse
+                      - pen
+                      - touch
+                  pointerId:
+                    type: integer
+                    format: int32
+                  x:
+                    type: array
+                    description: An array of x coordinates for the points of the stroke
+                    items:
+                      type: integer
+                      format: int32
+                  y:
+                    type: array
+                    description: An array of y coordinates for the points of the stroke
+                    items:
+                      type: integer
+                      format: int32
+                  t:
+                    type: array
+                    description: >-
+                      An array of timestamps when the points of the stroke were
+                      captured
+                    items:
+                      type: integer
+                      format: int32
+                  p:
+                    type: array
+                    description: >-
+                      An array of the pressure of the pen for each points of the
+                      stroke
+                    items:
+                      type: number
+                      format: float
