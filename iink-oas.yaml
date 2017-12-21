@@ -5,6 +5,116 @@ info:
     Trying to use openapi 3.0.0 in order to specify websocket message exchange
     of digital ink.
   version: 1.0.0
+paths:
+  /newContentPackage:
+    post:
+      description: This is the first call to initiate hwr session
+      operationId: newContentPackage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/newContentPackage'
+      responses:
+        '200':
+          description: Youe receive an aknowledgment for you first call
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/ack'
+  /hmac:
+    post:
+      description: The response for the hmac challenge
+      operationId: hmac
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/hmac'
+      responses:
+        '200':
+          description: This confirms that you correctly signed in
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/contentPackageDescription'
+  /configuration:
+    post:
+      operationId: configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/configuration'
+      responses:
+        '200':
+          description: no response there
+  /newContentPart:
+    post:
+      operationId: newContentPart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/newContentPart'
+      responses:
+        '200':
+          description: you will get a svgPatch and a partchanged message
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#components/schemas/partChanged'
+                  - $ref: '#components/schemas/svgPatch'
+  /setTheme:
+    post:
+    description: You can describe the css theme or your writing area
+      operationId: setTheme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/setTheme'
+      responses:
+        '200':
+          description: no response there
+  /setPenStyle:
+    post:
+      operationId: setPenStyle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/setPenStyle'
+      responses:
+        '200':
+          description: The new part
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/newPart'
+  /addStrokes:
+    post:
+      operationId: addStrokes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/addStrokes'
+      responses:
+        '200':
+          $ref: '#components/responses/hwrResponse'
+  /convert:
+    post:
+      operationId: convert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/convert'
+      responses:
+        '200':
+          $ref: '#components/responses/hwrResponse'
 components:
   schemas:
     message:
@@ -267,7 +377,7 @@ components:
               type: string
               description: id of the part
     update:
-    description: The "superclass" for the object "update"
+      description: The "superclass" for the object "update"
       type: object
       required:
       - type
@@ -508,3 +618,17 @@ components:
                     items:
                       type: number
                       format: float
+  responses:
+    hwrResponse:
+      description: >- 
+            "for each send of strokes you will recieve :
+              - an update of the svg element
+              - an indication that the content has changed
+              - an export of the result of the recognition"
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#components/schemas/contentChanged'
+            - $ref: '#components/schemas/svgPatch'
+            - $ref: '#components/schemas/exported'
