@@ -22,6 +22,10 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/ack'
+          links:
+            hmac:
+              description: Then you have to respond to the hmac challenge
+              operationId: hmac
   /hmac:
     post:
       description: The response for the hmac challenge
@@ -38,6 +42,10 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/contentPackageDescription'
+          links:
+            configuration:
+              description: Send then the configuration for the HWR engine
+              operationId: configuration
   /configuration:
     post:
       operationId: configuration
@@ -49,6 +57,10 @@ paths:
       responses:
         '200':
           description: no response there
+          links:
+            newContentPart:
+              description: Send then new content part
+              operationId: newContentPart
   /newContentPart:
     post:
       operationId: newContentPart
@@ -66,6 +78,10 @@ paths:
                 oneOf:
                   - $ref: '#components/schemas/partChanged'
                   - $ref: '#components/schemas/svgPatch'
+          links:
+            setTheme:
+              description: go then to the setTheme part
+              operationId: setTheme
   /setTheme:
     post:
     description: You can describe the css theme or your writing area
@@ -78,6 +94,10 @@ paths:
       responses:
         '200':
           description: no response there
+          links:
+            setPenStyle:
+              description: go then to the setPenStyle part
+              operationId: setPenStyle
   /setPenStyle:
     post:
       operationId: setPenStyle
@@ -93,6 +113,10 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/newPart'
+          links:
+            addStrokes:
+              description: You can then start sending strokes to the HWR
+              operationId: addStrokes
   /addStrokes:
     post:
       operationId: addStrokes
@@ -104,6 +128,10 @@ paths:
       responses:
         '200':
           $ref: '#components/responses/hwrResponse'
+          links:
+            convert:
+              description: At any time you can ask for conversion of the content of the writing area
+              operationId: convert
   /convert:
     post:
       operationId: convert
