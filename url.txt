@@ -1,0 +1,4 @@
+# https://developer.myscript.com/docs/interactive-ink/1.0/web/websockets/messages/
+# https://doc.myscript.com/MyScriptCloud/3.2.0/reference/index.html#api-Text_Websocket_Recognition-Continue
+# https://developer.myscript.com/old-docs/cdk/3.2/myscript-cloud/reco-types.html
+# https://developer.myscript.com/old-docs/cdk/3.2/myscript-cloud/protocols.html#websocket-protocol
