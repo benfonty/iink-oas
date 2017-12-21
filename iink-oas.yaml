@@ -84,7 +84,7 @@ paths:
               operationId: setTheme
   /setTheme:
     post:
-    description: You can describe the css theme or your writing area
+      description: You can describe the css theme or your writing area
       operationId: setTheme
       requestBody:
         content:
@@ -130,7 +130,9 @@ paths:
           $ref: '#components/responses/hwrResponse'
           links:
             convert:
-              description: At any time you can ask for conversion of the content of the writing area
+              description: >-
+                At any time you can ask for conversion of the content of the
+                writing area
               operationId: convert
   /convert:
     post:
@@ -200,7 +202,8 @@ components:
       description: Your response to the hmac challenge
       externalDocs:
         description: More on computing the hmac challenge
-        url: https://developer.myscript.com/support/account/registering-myscript-cloud/#computing-the-hmac-value
+        url: >-
+          https://developer.myscript.com/support/account/registering-myscript-cloud/#computing-the-hmac-value
       allOf:
         - $ref: '#/components/schemas/message'
         - type: object
@@ -254,7 +257,7 @@ components:
             math:
               type: object
               required:
-              - solver
+                - solver
               properties:
                 mimeTypes:
                   type: array
@@ -271,7 +274,7 @@ components:
                 solver:
                   type: object
                   required:
-                  - enable
+                    - enable
                   properties:
                     enable:
                       type: boolean
@@ -292,7 +295,7 @@ components:
                 text:
                   type: object
                   required:
-                  - margin
+                    - margin
                   properties:
                     mimeTypes:
                       type: array
@@ -308,7 +311,7 @@ components:
                     margin:
                       type: object
                       required:
-                      - top
+                        - top
                       properties:
                         top:
                           type: integer
@@ -346,8 +349,8 @@ components:
         - $ref: '#/components/schemas/message'
         - type: object
           required:
-          - contentType
-          - mimeType
+            - contentType
+            - mimeType
           properties:
             contentType:
               type: string
@@ -408,14 +411,14 @@ components:
       description: The "superclass" for the object "update"
       type: object
       required:
-      - type
+        - type
       properties:
         type:
           type: string
       discriminator:
         propertyName: type
     APPEND_CHILD:
-      description: "update : append a child svg element to a parent svg element"
+      description: 'update : append a child svg element to a parent svg element'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -427,10 +430,10 @@ components:
               type: string
               description: The svg element that has to be appended
           required:
-          - parentId
-          - svg
+            - parentId
+            - svg
     REMOVE_ELEMENT:
-      description: "update : remove an svg element"
+      description: 'update : remove an svg element'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -439,9 +442,9 @@ components:
               type: string
               description: the id of the element that has to be removed
           required:
-          - id
+            - id
     REPLACE_ALL:
-      description: "update : replace all svg"
+      description: 'update : replace all svg'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -450,9 +453,9 @@ components:
               type: string
               description: The svg element that replaces all
           required:
-          - svg
+            - svg
     REPLACE_ELEMENT:
-      description: "update : replace an svg element by another"
+      description: 'update : replace an svg element by another'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -464,10 +467,10 @@ components:
               type: string
               description: The svg replacement element
           required:
-          - svg
-          - id
+            - svg
+            - id
     REMOVE_CHILD:
-      description: "update : remove a child of an svg element"
+      description: 'update : remove a child of an svg element'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -480,10 +483,10 @@ components:
               format: int32
               description: the index of the child element that has to be removed
           required:
-          - parentId
-          - index
+            - parentId
+            - index
     INSERT_BEFORE:
-      description: "update : insert an subling svg element before another"
+      description: 'update : insert an subling svg element before another'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -495,10 +498,10 @@ components:
               type: string
               description: The svg element that has to be inserted
           required:
-          - refId
-          - svg
+            - refId
+            - svg
     SET_ATTRIBUTE:
-      description: "update : set an attribute to an svg element"
+      description: 'update : set an attribute to an svg element'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -513,11 +516,11 @@ components:
               type: string
               description: the value of the attribute to be setted
           required:
-          - id
-          - name
-          - value
+            - id
+            - name
+            - value
     REMOVE_ATTRIBUTE:
-      description: "update : remove an attribute of an svg element"
+      description: 'update : remove an attribute of an svg element'
       allOf:
         - $ref: '#/components/schemas/update'
         - type: object
@@ -529,8 +532,8 @@ components:
               type: string
               description: The name of the attribute to be removed
           required:
-          - id
-          - name
+            - id
+            - name
     svgPatch:
       description: >-
         Indicates that there are changes to make to the svg part of the writing
@@ -539,21 +542,21 @@ components:
         - $ref: '#/components/schemas/message'
         - type: object
           required:
-          - updates
+            - updates
           properties:
             updates:
               type: array
               description: the changes to make
               items:
                 oneOf:
-                - '#/components/schemas/APPEND_CHILD'
-                - '#/components/schemas/REMOVE_ELEMENT'
-                - '#/components/schemas/REPLACE_ALL'
-                - '#/components/schemas/REPLACE_ELEMENT'
-                - '#/components/schemas/REMOVE_CHILD'
-                - '#/components/schemas/INSERT_BEFORE'
-                - '#/components/schemas/REMOVE_ATTRIBUTE'
-                - '#/components/schemas/SET_ATTRIBUTE' 
+                  - $ref: '#/components/schemas/APPEND_CHILD'
+                  - $ref: '#/components/schemas/REMOVE_ELEMENT'
+                  - $ref: '#/components/schemas/REPLACE_ALL'
+                  - $ref: '#/components/schemas/REPLACE_ELEMENT'
+                  - $ref: '#/components/schemas/REMOVE_CHILD'
+                  - $ref: '#/components/schemas/INSERT_BEFORE'
+                  - $ref: '#/components/schemas/REMOVE_ATTRIBUTE'
+                  - $ref: '#/components/schemas/SET_ATTRIBUTE'
     contentChanged:
       description: A content has changed after the computing of strokes
       allOf:
@@ -599,12 +602,12 @@ components:
               items:
                 type: object
                 required:
-                - id
-                - pointerType
-                - x
-                - y
-                - t
-                - p
+                  - id
+                  - pointerType
+                  - x
+                  - 'y'
+                  - t
+                  - p
                 properties:
                   id:
                     type: string
@@ -624,7 +627,7 @@ components:
                     items:
                       type: integer
                       format: int32
-                  y:
+                  'y':
                     type: array
                     description: An array of y coordinates for the points of the stroke
                     items:
@@ -648,15 +651,15 @@ components:
                       format: float
   responses:
     hwrResponse:
-      description: >- 
-            "for each send of strokes you will recieve :
-              - an update of the svg element
-              - an indication that the content has changed
-              - an export of the result of the recognition"
+      description: |-
+        "for each send of strokes you will recieve :
+          - an update of the svg element
+          - an indication that the content has changed
+          - an export of the result of the recognition"
       content:
         application/json:
           schema:
             oneOf:
-            - $ref: '#components/schemas/contentChanged'
-            - $ref: '#components/schemas/svgPatch'
-            - $ref: '#components/schemas/exported'
+              - $ref: '#components/schemas/contentChanged'
+              - $ref: '#components/schemas/svgPatch'
+              - $ref: '#components/schemas/exported'
