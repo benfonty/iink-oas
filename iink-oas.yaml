@@ -60,6 +60,9 @@ components:
               description: The hmac challenge
     hmac:
       description: Your response to the hmac challenge
+      externalDocs:
+        description: More on computing the hmac challenge
+        url: https://developer.myscript.com/support/account/registering-myscript-cloud/#computing-the-hmac-value
       allOf:
         - $ref: '#/components/schemas/message'
         - type: object
@@ -112,6 +115,8 @@ components:
                       type: boolean
             math:
               type: object
+              required:
+              - solver
               properties:
                 mimeTypes:
                   type: array
@@ -127,6 +132,8 @@ components:
                     description: format ?
                 solver:
                   type: object
+                  required:
+                  - enable
                   properties:
                     enable:
                       type: boolean
@@ -146,6 +153,8 @@ components:
                         - rad
                 text:
                   type: object
+                  required:
+                  - margin
                   properties:
                     mimeTypes:
                       type: array
@@ -160,6 +169,8 @@ components:
                         description: format ?
                     margin:
                       type: object
+                      required:
+                      - top
                       properties:
                         top:
                           type: integer
@@ -196,6 +207,9 @@ components:
       allOf:
         - $ref: '#/components/schemas/message'
         - type: object
+          required:
+          - contentType
+          - mimeType
           properties:
             contentType:
               type: string
@@ -252,6 +266,133 @@ components:
             partId:
               type: string
               description: id of the part
+    update:
+    description: The "superclass" for the object "update"
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    APPEND_CHILD:
+      description: "update : append a child svg element to a parent svg element"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            parentId:
+              type: string
+              description: The id under which has to be appendeded the child svg element
+            svg:
+              type: string
+              description: The svg element that has to be appended
+          required:
+          - parentId
+          - svg
+    REMOVE_ELEMENT:
+      description: "update : remove an svg element"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: the id of the element that has to be removed
+          required:
+          - id
+    REPLACE_ALL:
+      description: "update : replace all svg"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            svg:
+              type: string
+              description: The svg element that replaces all
+          required:
+          - svg
+    REPLACE_ELEMENT:
+      description: "update : replace an svg element by another"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: the id of the element that has to be replaced
+            svg:
+              type: string
+              description: The svg replacement element
+          required:
+          - svg
+          - id
+    REMOVE_CHILD:
+      description: "update : remove a child of an svg element"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            parentId:
+              type: string
+              description: the id of the element whose child has to be removed
+            index:
+              type: integer
+              format: int32
+              description: the index of the child element that has to be removed
+          required:
+          - parentId
+          - index
+    INSERT_BEFORE:
+      description: "update : insert an subling svg element before another"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            refId:
+              type: string
+              description: the id of the reference element
+            svg:
+              type: string
+              description: The svg element that has to be inserted
+          required:
+          - refId
+          - svg
+    SET_ATTRIBUTE:
+      description: "update : set an attribute to an svg element"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: the id of the element
+            name:
+              type: string
+              description: The name of the attribute to be setted
+            value:
+              type: string
+              description: the value of the attribute to be setted
+          required:
+          - id
+          - name
+          - value
+    REMOVE_ATTRIBUTE:
+      description: "update : remove an attribute of an svg element"
+      allOf:
+        - $ref: '#/components/schemas/update'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: the id of the element
+            name:
+              type: string
+              description: The name of the attribute to be removed
+          required:
+          - id
+          - name
     svgPatch:
       description: >-
         Indicates that there are changes to make to the svg part of the writing
@@ -259,49 +400,22 @@ components:
       allOf:
         - $ref: '#/components/schemas/message'
         - type: object
+          required:
+          - updates
           properties:
             updates:
               type: array
               description: the changes to make
               items:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                      - APPEND_CHILD
-                      - REMOVE_ELEMENT
-                      - REPLACE_ALL
-                      - REPLACE_ELEMENT
-                      - REMOVE_CHILD
-                      - INSERT_BEFORE
-                      - REMOVE_ATTRIBUTE
-                      - SET_ATTRIBUTE
-                  svg:
-                    type: string
-                    description: The svg bloc that has to be treated
-                  parentId:
-                    type: string
-                    description: >-
-                      The id under which has to be REMOVEd or APPENDed the CHILD
-                      svg bloc
-                  id:
-                    type: string
-                    description: the id of the ELEMENT to REMOVE or REPLACE
-                  index:
-                    type: integer
-                    format: int32
-                    description: the index of the CHILD that has to be REMOVEd
-                  refId:
-                    type: integer
-                    format: int32
-                    description: The id BEFORE witch the svg bloc has to be INSERTed
-                  name:
-                    type: string
-                    description: The name of the ATTRIBUTE that has to be trated
-                  value:
-                    type: string
-                    description: A value for the ATTRIBUTE.
+                oneOf:
+                - '#/components/schemas/APPEND_CHILD'
+                - '#/components/schemas/REMOVE_ELEMENT'
+                - '#/components/schemas/REPLACE_ALL'
+                - '#/components/schemas/REPLACE_ELEMENT'
+                - '#/components/schemas/REMOVE_CHILD'
+                - '#/components/schemas/INSERT_BEFORE'
+                - '#/components/schemas/REMOVE_ATTRIBUTE'
+                - '#/components/schemas/SET_ATTRIBUTE' 
     contentChanged:
       description: A content has changed after the computing of strokes
       allOf:
@@ -334,9 +448,10 @@ components:
               additionalProperties:
                 type: string
     convert:
+      description: ask to convert the handwriting to script
       $ref: '#/components/schemas/message'
     addStrokes:
-      description: sending strokes to the recognition engine
+      description: send strokes to the recognition engine
       allOf:
         - $ref: '#/components/schemas/message'
         - type: object
@@ -345,6 +460,13 @@ components:
               type: array
               items:
                 type: object
+                required:
+                - id
+                - pointerType
+                - x
+                - y
+                - t
+                - p
                 properties:
                   id:
                     type: string
